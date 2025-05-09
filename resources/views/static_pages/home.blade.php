@@ -1,3 +1,5 @@
-<div>
-    <!-- Simplicity is the consequence of refined emotions. - Jean D'Alembert -->
-</div>
+@extends('layouts.default')
+
+@section('content')
+    <h1>主页</h1>
+@stop

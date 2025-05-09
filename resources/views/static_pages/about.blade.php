@@ -1,3 +1,6 @@
-<div>
-    <!-- Do what you can, with what you have, where you are. - Theodore Roosevelt -->
-</div>
+@extends('layouts.default')
+@section('title', 'About')
+
+@section('content')
+    <h1>关于页</h1>
+@stop
