@@ -11,6 +11,7 @@ class StaticPagesController extends Controller
     {
         return view('static_pages/home');
     }
+
     public function help(): View
     {
         return view('static_pages/help');
