@@ -15,3 +15,40 @@ body {
 nav.navbar.navbar-expand-lg {
     margin-bottom: 20px;
 }
+
+/* footer */
+footer.footer { // 更明确地指定是 .footer 类的 footer 元素
+    margin-top: 45px;
+    padding-top: 5px;
+    border-top: 1px solid #eaeaea;
+    color: #777;
+    font-size: 13px;
+    font-weight: bold;
+
+    // --- 添加 Flexbox 属性 ---
+    display: flex;          // 将 footer 设置为 flex 容器
+    align-items: center;    // 垂直居中所有子项 (图片、链接、div)
+    // justify-content: space-between; // 如果你希望左右两边的内容自动分开
+
+    img.brand-icon {
+        width: 17px;
+        height: 17px;
+        margin-right: 5px; // 在图片和 "Laravel" 文字之间添加一点间距
+        // vertical-align: middle; // 在 Flexbox 中, align-items 通常更适用
+    }
+
+    a { // 这个会应用到 footer 内所有 a 标签
+        color: #555;
+        // text-decoration: none; // HTML中已有 class="text-decoration-none", 通常不需要重复
+    }
+
+    a:hover {
+        color: #222;
+    }
+
+    div.float-end {
+        // 当父元素是 flex 容器时，子项的 float 属性通常会被忽略。
+        // 我们使用 margin-left: auto; 来将这个 div 推到右边。
+        margin-left: auto;
+    }
+}
