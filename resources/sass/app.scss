@@ -1,8 +1,17 @@
-// Fonts
+// 文件路径 resource/sass/app.scss
+
+// 导入自己的变量
+@use 'variables'; // _variables.scss
+
+// 导入 URL 字体
 @import url('https://fonts.bunny.net/css?family=Nunito');
 
-// Variables
-@import 'variables';
+// 全局自定义样式
+body {
+    font-size: 14px;
+    font-weight: normal;
+}
 
-// Bootstrap
-@import 'bootstrap/scss/bootstrap';
+nav.navbar.navbar-expand-lg {
+    margin-bottom: 20px;
+}
