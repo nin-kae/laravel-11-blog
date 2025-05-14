@@ -12,5 +12,10 @@
         <p>
             <a class="btn btn-lg btn-success" href="{{ route('signup') }}" role="button">现在注册</a>
         </p>
+        @if(!Auth::check())
+            <p>
+                <a class="btn btn-lg btn-success" href="{{ route('signup') }}" role="button">现在注册</a>
+            </p>
+        @endif
     </div>
 @stop

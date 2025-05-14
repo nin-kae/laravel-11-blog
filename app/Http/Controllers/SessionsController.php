@@ -9,6 +9,21 @@ use Illuminate\Http\Request;
 class SessionsController extends Controller
 {
     /**
+     * SessionsController constructor.
+     *
+     * This constructor applies middleware to the controller methods.
+     * - guest: Only guests can access the login page.
+     * - auth: Only authenticated users can access certain methods.
+     */
+    public function __construct()
+    {
+        // Only guests can access the login page
+        // If the user is authenticated, they will be redirected to the home page
+        // The 'guest' middleware checks if the user is not authenticated
+        $this->middleware('guest')->only('create');
+    }
+
+    /**
      * Show the login form.
      *
      * @return View
@@ -31,10 +46,12 @@ class SessionsController extends Controller
             'password' => 'required',
         ]);
 
+        // auth()->attempt() will attempt to log in the user with the given credentials.
+        // redirect()->intended($fallback) will redirect to the intended URL if it exists, otherwise it will redirect to the fallback URL.
         if(auth()->attempt($credentials, $request->has('remember'))) {
             $request->session()->regenerate();
-//            $fallbackUrl = url()->previous();
-            return redirect()->route('users.show', auth()->user())->with('success', 'Logged in successfully');
+            $fallback = route('users.show', auth()->user());
+            return redirect()->intended($fallback)->with('success', 'Logged in successfully.');
         }
 
         return back()->withInput()->with('danger', 'Invalid credentials.');

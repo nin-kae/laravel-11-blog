@@ -3,31 +3,43 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
-//    public function __construct()
-//    {
-//        //
-//        $this->middleware('auth', [
-//            'except' => ['show', 'create', 'store' ]
-//        ]);
-//
-//        $this->middleware('auth', [
-//            'only' => ['create', 'store']
-//        ]);
-//    }
+    /**
+     * UsersController constructor.
+     *
+     * This constructor applies middleware to the controller methods.
+     * - auth: Only authenticated users can access certain methods.
+     * - guest: Only guests can access the registration page.
+     */
+    public function __construct()
+    {
+        // 只允许未认证的用户访问注册页面
+        // 如果访问非 show, create, store 方法则需要认证, 会自动重定向到登录页面
+        $this->middleware('auth')->except(['show', 'create', 'store']);
+
+        // 只允许未认证的用户访问注册页面
+        $this->middleware('guest')->only('create');
+    }
 
     /**
      *  Show the registeration form
      *
+     * @param User $user
      * @return View
+     * @throws AuthorizationException
      */
-    public function create(): View
+    public function create(User $user): View
     {
+        // Check if the authenticated user is authorized to update the user
+        // This will automatically check the UserPolicy for the update method
+        // If the user is not authorized, it will throw a 403 Forbidden response
+        $this->authorize('update', $user);
         return view('users.create');
     }
 
@@ -84,7 +96,7 @@ class UsersController extends Controller
         // $request->only() retrieves only the specified fields from the request
         $data = $request->only(['name', 'password']);
         if ($request->filled('password')) {
-            $data['password'] = bcrypt($data['password']);
+            $data = $request->only('name', 'password');
         }
         $user->update($data);
 
