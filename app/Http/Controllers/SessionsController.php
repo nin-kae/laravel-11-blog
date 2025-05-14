@@ -8,11 +8,22 @@ use Illuminate\Http\Request;
 
 class SessionsController extends Controller
 {
+    /**
+     * Show the login form.
+     *
+     * @return View
+     */
     public function create(): View
     {
         return view('sessions.create');
     }
 
+    /**
+     * Log the user in.
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
     public function store(Request $request): RedirectResponse
     {
         $credentials = $request->validate([

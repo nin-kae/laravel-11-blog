@@ -21,6 +21,11 @@ class UsersController extends Controller
 //        ]);
 //    }
 
+    /**
+     *  Show the registeration form
+     *
+     * @return View
+     */
     public function create(): View
     {
         return view('users.create');
@@ -41,14 +46,16 @@ class UsersController extends Controller
             'password' => 'required|string|min:6|confirmed',
         ]);
 
+        // 创造一个新的用户
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password)
         ]);
 
-//        auth()->login($user); // 注册成功之后自动登录
+        auth()->login($user); // 注册成功之后自动登录
 
+        // Redirect to the user's profile with a session flash message.
         return redirect()->route('users.show', $user)->with('success', 'User created successfully.');;
     }
 

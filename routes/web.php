@@ -26,4 +26,4 @@ Route::resource('users', UsersController::class);
 // 登录和退出登录
 Route::get('login', [UsersController::class, 'create'])->name('login');
 Route::post('login', [UsersController::class, 'store'])->name('login');
-Route::get('logout', [UsersController::class, 'destroy'])->name('logout');
+Route::delete('logout', [UsersController::class, 'destroy'])->name('logout');
