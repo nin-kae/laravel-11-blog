@@ -9,7 +9,7 @@
 
 <div class="container">
 
-{{--    @include('shared._messages')--}}
+    @include('shared._messages')
 
     @yield('content')
 

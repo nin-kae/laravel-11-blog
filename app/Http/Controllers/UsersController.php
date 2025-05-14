@@ -31,25 +31,25 @@ class UsersController extends Controller
         return view('users.show', compact('user'));
     }
 
-    public function store(Request $request): View
+    public function store(Request $request)
     {
 
         // 三个必须传的数据
-        $request->validate($request, [
+        $request->validate([
             'name' => 'required|string|unique:users|max:50',
-            'email' => 'required|email|mix:255|unique:users',
+            'email' => 'required|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
 
         $user = User::create([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'password' => bcrypt($request['password']),
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password)
         ]);
 
-        auth()->login($user); // 注册成功之后自动登录
+//        auth()->login($user); // 注册成功之后自动登录
 
-        return redirect()->route('users.show', $user);
+        return redirect()->route('users.show', $user)->with('success', 'User created successfully.');;
     }
 
     public function edit(User $user): View
