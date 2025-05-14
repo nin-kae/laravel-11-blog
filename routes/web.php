@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\StaticPagesController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
