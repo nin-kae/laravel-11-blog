@@ -1,5 +1,5 @@
 <footer class="footer">
-    <img class="brand-icon" src="favicon.ico" alt="Laravel Logo">
+    <img class="brand-icon" src="{{ asset('favicon.ico') }}" alt="Laravel Logo">
     <a href="https://laravel.com/" target=_blank class="text-decoration-none">
         Laravel
     </a>

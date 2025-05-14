@@ -1,12 +1,12 @@
 // 文件路径 resource/sass/app.scss
 
-// 导入自己的变量
-@use 'variables'; // _variables.scss
+//1. 导入自己的变量
+@use 'variables'; // 自己的 _variables.scss
 
-// 导入 URL 字体
+//2. 导入 URL 字体
 @import url('https://fonts.bunny.net/css?family=Nunito');
 
-// 全局自定义样式
+//3. 全局自定义样式
 body {
     font-size: 14px;
     font-weight: normal;
@@ -26,8 +26,8 @@ footer.footer { // 更明确地指定是 .footer 类的 footer 元素
     font-weight: bold;
 
     // --- 添加 Flexbox 属性 ---
-    display: flex;          // 将 footer 设置为 flex 容器
-    align-items: center;    // 垂直居中所有子项 (图片、链接、div)
+    display: flex; // 将 footer 设置为 flex 容器
+    align-items: center; // 垂直居中所有子项 (图片、链接、div)
     // justify-content: space-between; // 如果你希望左右两边的内容自动分开
 
     img.brand-icon {
@@ -51,4 +51,29 @@ footer.footer { // 更明确地指定是 .footer 类的 footer 元素
         // 我们使用 margin-left: auto; 来将这个 div 推到右边。
         margin-left: auto;
     }
+}
+
+/* User gravatar */
+section.user_info {
+    padding-bottom: 10px;
+    margin-top: 20px;
+    text-align: center;
+
+    .gravatar {
+        float: none;
+        max-width: 70px;
+    }
+
+    h1 {
+        font-size: 1.4em;
+        letter-spacing: -1px;
+        margin-bottom: 3px;
+        margin-top: 15px;
+    }
+}
+
+.gravatar {
+    float: left;
+    max-width: 50px;
+    border-radius: 50%;
 }
