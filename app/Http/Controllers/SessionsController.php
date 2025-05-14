@@ -28,23 +28,23 @@ class SessionsController extends Controller
     {
         $credentials = $request->validate([
             'email' => 'required|email|max:255',
-            'password' => 'required'
+            'password' => 'required',
         ]);
 
-        if(auth()->attempt($credentials)) {
+        if(auth()->attempt($credentials, $request->has('remember'))) {
             $request->session()->regenerate();
-            $fallbackUrl = url()->previous();
-            return redirect()->route('users.show')->with('success', 'Logged in successfully');
+//            $fallbackUrl = url()->previous();
+            return redirect()->route('users.show', auth()->user())->with('success', 'Logged in successfully');
         }
 
-        return back()->withInput()->with('danger', 'Invalid credentials');
+        return back()->withInput()->with('danger', 'Invalid credentials.');
 
     }
 
-    public function destroy(): RedirectResponse
+    public function destroy(Request $request): RedirectResponse
     {
         auth()->logout();
         $request->session()->invalidate();
-        return redirect()->route('users.show')->with('success', 'Logged out successfully');
+        return redirect('login')->with('success', 'Logged out successfully');
     }
 }

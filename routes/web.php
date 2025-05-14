@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\UsersController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\StaticPagesController;
-use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
 // 静态页面
@@ -12,6 +12,7 @@ Route::get('/about', [StaticPagesController::class, 'about'])->name('about');
 
 // 注册
 Route::get('signup', [UsersController::class, 'create'])->name('signup');
+Route::post('signup', [UsersController::class, 'store'])->name('signup.store');
 
 // 用户资源
 Route::resource('users', UsersController::class);
@@ -24,6 +25,6 @@ Route::resource('users', UsersController::class);
 // GET|HEAD   users/{user}/edit ..... users.edit › UsersController@edit 用户编辑表单
 
 // 登录和退出登录
-Route::get('login', [UsersController::class, 'create'])->name('login');
-Route::post('login', [UsersController::class, 'store'])->name('login');
-Route::delete('logout', [UsersController::class, 'destroy'])->name('logout');
+Route::get('login', [SessionsController::class, 'create'])->name('login');
+Route::post('login', [SessionsController::class, 'store'])->name('login');
+Route::delete('logout', [SessionsController::class, 'destroy'])->name('logout');
