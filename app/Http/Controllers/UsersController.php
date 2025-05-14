@@ -64,6 +64,13 @@ class UsersController extends Controller
         return view('users.edit', compact('user'));
     }
 
+    /**
+     * Update the user.
+     *
+     * @param Request $request
+     * @param User $user
+     * @return RedirectResponse
+     */
     public function update(Request $request, User $user): RedirectResponse
     {
         // 更新用户信息
@@ -73,10 +80,16 @@ class UsersController extends Controller
         ]);
 
         // Update the user
+        // $request->filled() checks if the field is present and not empty
+        // $request->only() retrieves only the specified fields from the request
         $data = $request->only(['name', 'password']);
         if ($request->filled('password')) {
             $data['password'] = bcrypt($data['password']);
         }
+        $user->update($data);
+
+        // Redirect to the user's profile with a session flash message.
+        return redirect()->route('users.show', $user)->with('success', 'User updated successfully.');
     }
 
 }
