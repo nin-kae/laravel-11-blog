@@ -19,6 +19,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // 套用 TailWind CSS 风格用的
+        \Illuminate\Pagination\Paginator::useBootstrap();
     }
 }

@@ -21,25 +21,34 @@ class UsersController extends Controller
     {
         // 只允许未认证的用户访问注册页面
         // 如果访问非 show, create, store 方法则需要认证, 会自动重定向到登录页面
-        $this->middleware('auth')->except(['show', 'create', 'store']);
+        $this->middleware('auth')->except(['show', 'create', 'store', 'index']);
 
         // 只允许未认证的用户访问注册页面
         $this->middleware('guest')->only('create');
     }
 
     /**
+     * Show the list of users.
+     *
+     * @return View
+     */
+    public function index(): View
+    {
+        $users = User::paginate($this->perPage); // 22:04
+        return view('users.index', compact('users'));
+    }
+
+    /**
      *  Show the registeration form
      *
-     * @param User $user
      * @return View
-     * @throws AuthorizationException
      */
-    public function create(User $user): View
+    public function create(): View
     {
         // Check if the authenticated user is authorized to update the user
         // This will automatically check the UserPolicy for the update method
         // If the user is not authorized, it will throw a 403 Forbidden response
-        $this->authorize('update', $user);
+        //$this->authorize('update', $user);
         return view('users.create');
     }
 
@@ -48,7 +57,13 @@ class UsersController extends Controller
         return view('users.show', compact('user'));
     }
 
-    public function store(Request $request)
+    /**
+     * Store a new user.
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function store(Request $request): RedirectResponse
     {
 
         // 三个必须传的数据
@@ -65,14 +80,26 @@ class UsersController extends Controller
             'password' => bcrypt($request->password)
         ]);
 
+        // Log the user in
         auth()->login($user); // 注册成功之后自动登录
 
         // Redirect to the user's profile with a session flash message.
         return redirect()->route('users.show', $user)->with('success', 'User created successfully.');;
     }
 
+    /**
+     * Show the edit user form.
+     *
+     * @param User $user
+     * @return View
+     * @throws AuthorizationException
+     */
     public function edit(User $user): View
     {
+        // Check if the authenticated user is authorized to update the user
+        // This will automatically check the UserPolicy for the update method
+        // If the user is not authorized, it will throw a 403 Forbidden response
+        $this->authorize('update', $user);
         return view('users.edit', compact('user'));
     }
 
@@ -107,4 +134,21 @@ class UsersController extends Controller
         return redirect()->route('users.show', $user)->with('success', 'User updated successfully.');
     }
 
+    /**
+     * Delete the user.
+     *
+     * @param User $user
+     * @return RedirectResponse
+     * @throws AuthorizationException
+     */
+    public function destroy(User $user): RedirectResponse
+    {
+        $this->authorize('destroy', $user);
+
+        // Delete the user
+        $user->delete();
+
+        // Redirect to the users list with a session flash message.
+        return redirect()->route('users.index')->with('success', 'User deleted successfully.');
+    }
 }

@@ -14,11 +14,14 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 
 /**
+ * 
  *
  * @property int $id
  * @property string $name
  * @property string $email
  * @property Carbon|null $email_verified_at
+ * @property string $password
+ * @property string|null $remember_token
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
@@ -35,6 +38,8 @@ use Illuminate\Support\Carbon;
  * @method static Builder<static>|User wherePassword($value)
  * @method static Builder<static>|User whereRememberToken($value)
  * @method static Builder<static>|User whereUpdatedAt($value)
+ * @property int $is_admin
+ * @method static Builder<static>|User whereIsAdmin($value)
  * @mixin Eloquent
  */
 class User extends Authenticatable
