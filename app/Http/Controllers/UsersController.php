@@ -35,7 +35,7 @@ class UsersController extends Controller
      */
     public function index(): View
     {
-        $users = User::paginate($this->perPage); // 22:04
+        $users = User::paginate($this->perPage);
         return view('users.index', compact('users'));
     }
 
