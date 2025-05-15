@@ -14,7 +14,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $name
@@ -40,6 +40,10 @@ use Illuminate\Support\Carbon;
  * @method static Builder<static>|User whereUpdatedAt($value)
  * @property int $is_admin
  * @method static Builder<static>|User whereIsAdmin($value)
+ * @property int $activated
+ * @property string|null $activation_token
+ * @method static Builder<static>|User whereActivated($value)
+ * @method static Builder<static>|User whereActivationToken($value)
  * @mixin Eloquent
  */
 class User extends Authenticatable
@@ -67,6 +71,21 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    /**
+     * 在创建用户的时候生成用户的 activation_token
+     *
+     * @return void
+     */
+    public static function boot(): void
+    {
+        parent::boot();
+
+        static::creating(function (User $user) {
+            // 生成激活令牌
+            $user->activation_token = str()->random(30);
+        });
+    }
 
     /**
      * Get the attributes that should be cast.

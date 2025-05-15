@@ -7,6 +7,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class UsersController extends Controller
 {
@@ -21,7 +22,7 @@ class UsersController extends Controller
     {
         // 只允许未认证的用户访问注册页面
         // 如果访问非 show, create, store 方法则需要认证, 会自动重定向到登录页面
-        $this->middleware('auth')->except(['show', 'create', 'store', 'index']);
+        $this->middleware('auth')->except(['show', 'create', 'store', 'index', 'confirmEmail']);
 
         // 只允许未认证的用户访问注册页面
         $this->middleware('guest')->only('create');
@@ -80,11 +81,11 @@ class UsersController extends Controller
             'password' => bcrypt($request->password)
         ]);
 
-        // Log the user in
-        auth()->login($user); // 注册成功之后自动登录
+        // Send email confirmation
+        $this->sendEmailConfirmationTo($user);
 
         // Redirect to the user's profile with a session flash message.
-        return redirect()->route('users.show', $user)->with('success', 'User created successfully.');;
+        return redirect()->route('home')->with('success'. 'User created successfully.Please check your email to activate your account.');
     }
 
     /**
@@ -150,5 +151,44 @@ class UsersController extends Controller
 
         // Redirect to the users list with a session flash message.
         return redirect()->route('users.index')->with('success', 'User deleted successfully.');
+    }
+
+    /**
+     * Send an email confirmation to the user.
+     *
+     * @param $user
+     * @return void
+     */
+    protected function sendEmailConfirmationTo($user): void
+    {
+        $view = 'emails.confirm';
+        $data = compact('user');
+        $from = 'renhuaying0401@gmail.com';
+        $name = 'NIN-KAE';
+        $to = $user->email;
+        $subject = "感谢注册 NIN-KAE 应用！请确认你的邮箱。";
+
+        // Send the email
+        Mail::send($view, $data, function ($message) use ($from, $name, $to, $subject) {
+            $message->from($from, $name)->to($to)->subject($subject);
+        });
+    }
+
+    /**
+     * 验证用户邮箱, 修改用户信息为激活, 删除 activation_token
+     *
+     * @param $token
+     * @return RedirectResponse
+     */
+    public function confirmEmail($token): RedirectResponse
+    {
+        $user = User::where('activation_token', $token)->firstOrFail();
+
+        $user->activation_token = null;
+        $user->activated = true;
+        $user->save();
+
+        auth()->login($user);
+        return redirect()->route('users.show', $user)->with('success', 'User activated successfully.');
     }
 }

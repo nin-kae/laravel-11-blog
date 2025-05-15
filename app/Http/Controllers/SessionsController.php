@@ -49,13 +49,16 @@ class SessionsController extends Controller
         // auth()->attempt() will attempt to log in the user with the given credentials.
         // redirect()->intended($fallback) will redirect to the intended URL if it exists, otherwise it will redirect to the fallback URL.
         if(auth()->attempt($credentials, $request->has('remember'))) {
-            $request->session()->regenerate();
-            $fallback = route('users.show', auth()->user());
-            return redirect()->intended($fallback)->with('success', 'Logged in successfully.');
+            if (auth()->user()->activated) {
+                $request->session()->regenerate();
+                $fallback = route('users.show', auth()->user());
+                return redirect()->intended($fallback)->with('success', 'Logged in successfully.');
+            }
+            auth()->logout();
+            return redirect()->route('home')->with('warning', 'Your account is not activated, please check your email.');
         }
 
         return back()->withInput()->with('danger', 'Invalid credentials.');
-
     }
 
     public function destroy(Request $request): RedirectResponse
