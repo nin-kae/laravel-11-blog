@@ -13,6 +13,12 @@ use Illuminate\Support\Str;
 
 class PasswordController extends Controller
 {
+    public function __construct()
+    {
+        // Request limiting for the sendResetLinkEmail method, 3 requests per minute
+        $this->middleware('throttle:3,1')->only(['sendResetLinkEmail']);
+    }
+
     /**
      * Display the form to request a password reset link.
      *

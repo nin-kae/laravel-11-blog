@@ -21,6 +21,9 @@ class SessionsController extends Controller
         // If the user is authenticated, they will be redirected to the home page
         // The 'guest' middleware checks if the user is not authenticated
         $this->middleware('guest')->only('create');
+
+        // Request limiting for the store method, 10 requests 10 minute
+        $this->middleware('throttle:10,10')->only('store');
     }
 
     /**
