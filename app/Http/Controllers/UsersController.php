@@ -88,7 +88,7 @@ class UsersController extends Controller
         $this->sendEmailConfirmationTo($user);
 
         // Redirect to the user's profile with a session flash message.
-        return redirect()->route('home')->with('success'. 'User created successfully.Please check your email to activate your account.');
+        return redirect()->route('home')->with('success', 'User created successfully.Please check your email to activate your account.');
     }
 
     /**
@@ -128,7 +128,7 @@ class UsersController extends Controller
         // Update the user
         // $request->filled() checks if the field is present and not empty
         // $request->only() retrieves only the specified fields from the request
-        $data = $request->only(['name', 'password']);
+        $data = $request->only('name');
         if ($request->filled('password')) {
             $data = $request->only('name', 'password');
         }
