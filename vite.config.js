@@ -7,8 +7,7 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
-                'resources/sass/app.scss', // 确保 Sass 入口文件在这里列出
-                'resources/js/app.js',
+                'resources/js/app.js', // 主要入口文件，将在此文件中导入所有 CSS
             ],
             refresh: true,
         }),

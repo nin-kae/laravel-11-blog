@@ -1,7 +1,8 @@
 // 文件路径 resource/sass/app.scss
 
 //1. 导入自己的变量
-@use 'variables'; // 自己的 _variables.scss
+@use 'variables';
+// 确保 _variables.scss 文件存在于 resources/sass/variables.scss 或 resources/sass/_variables.scss
 
 //2. 导入 URL 字体
 @import url('https://fonts.bunny.net/css?family=Nunito');
@@ -10,6 +11,8 @@
 body {
     font-size: 14px;
     font-weight: normal;
+    // 注意：Tailwind 的 base 样式会设置 font-family 为 Figtree (根据你的 tailwind.config.js)
+    // 如果你希望 Nunito 作为全局字体，你需要在这里或 Tailwind 配置中明确设置
 }
 
 nav.navbar.navbar-expand-lg {
@@ -17,7 +20,8 @@ nav.navbar.navbar-expand-lg {
 }
 
 /* footer */
-footer.footer { // 更明确地指定是 .footer 类的 footer 元素
+// 更明确地指定是 .footer 类的 footer 元素
+footer.footer {
     margin-top: 45px;
     padding-top: 5px;
     border-top: 1px solid #eaeaea;
@@ -37,9 +41,8 @@ footer.footer { // 更明确地指定是 .footer 类的 footer 元素
         // vertical-align: middle; // 在 Flexbox 中, align-items 通常更适用
     }
 
-    a { // 这个会应用到 footer 内所有 a 标签
+    a {
         color: #555;
-        // text-decoration: none; // HTML中已有 class="text-decoration-none", 通常不需要重复
     }
 
     a:hover {
@@ -82,6 +85,7 @@ section.user_info {
 .gravatar_edit {
     margin: 15px auto;
     text-align: center;
+
     .gravatar {
         float: none;
         max-width: 100px;
