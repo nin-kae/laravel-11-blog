@@ -58,7 +58,9 @@ class UsersController extends Controller
 
     public function show(User $user): View
     {
-        return view('users.show', compact('user'));
+        $statuses = $user->statuses()->orderBy('created_at', 'desc')->paginate($this->perPage);
+
+        return view('users.show', compact('user', 'statuses'));
     }
 
     /**
