@@ -202,3 +202,125 @@
     git merge user-crud
     git push
     ```
+## 📅 2025/05/14
+
+- 创建一个新的分支
+    ```bash
+    git checkout main
+    git checkout -b user-list
+    ```
+
+- 创建 UsersTableSeeder
+    ```bash
+    php artisan make:seeder UsersTableSeeder
+    ```
+- 运行数据填充
+    ```bash
+    php artisan migrate:fresh --seed
+    ```
+
+- 创建一个新的 migration 文件给 users 表添加一个 is_admin 字段
+    ```bash
+    php artisan make:migration add_is_admin_to_users_table --table=users
+    ```
+
+- 运行数据填充
+    ```bash
+    php artisan migrate:fresh --seed
+    ```
+
+- 你可以选择让 ide-helper 生成模型的注释
+    ```bash
+    php artisan ide-helper:models -W
+    ```
+
+- 完成用户列表页面、给用户表新增 is_admin 字段、删除用户
+    ```bash
+    git add -A
+    git commit -m "完成用户列表页面、给用户表新增 is_admin 字段、删除用户"
+    git checkout main
+    git merge user-list
+    git push
+    ```
+
+- 创建一个新的分支了来开发通过发送邮件来激活用户
+    ```bash
+    git checkout -b account-activation-password-resets
+    php artisan make:migration add_activation_to_users_table --table=users
+    ```
+- 运行数据填充
+    ```bash
+    php artisan migrate
+    ```
+
+- 你可以选择让 ide-helper 生成模型的注释
+    ```bash
+    php artisan ide-helper:models -W
+    ```
+
+- 开发完成用户激活功能
+    ```bash
+    git add -A
+    git commit -m "完成用户激活功能"
+    git checkout main
+    git merge account-activation-password-resets
+    git push
+    ```
+
+## 📅 2025/05/16
+
+- 创建一个新的分支
+    ```bash
+    git checkout main
+    git checkout -b user-statuses
+    ```
+
+- 创建 statuses 表的数据迁移、模型
+    ```bash
+    php artisan make:migration create_statuses_table --create="statuses"
+    php artisan migrate
+    php artisan make:model Status
+    ```
+
+- 提交代码
+    ```bash
+    git add -A
+    git commit -m "创建 statuses 表的数据迁移、模型"
+    ```
+
+- 大家要记住, 因为我们在使用 ide-helper 生成模型的注释, 所以在模型的属性发生变更的时候, 还有创建了新的模型的时候...,
+  去运行一下这个命令
+    ```bash
+    php artisan ide-helper:models
+    ```
+- 创建 StatusFactory
+    ```bash
+    php artisan make:factory StatusFactory
+    ```
+
+- 创建 StatusesTableSeeder, 在编辑完成之后需要去在 [DatabaseSeeder.php](database/seeders/DatabaseSeeder.php) 文件中调用
+    ```bash
+    php artisan make:seeder StatusesTableSeeder
+    ```
+
+- 运行数据填充
+    ```bash
+    php artisan migrate:fresh --seed
+    ```
+
+- 提交代码
+    ```bash
+    git add -A
+    git commit -m "用户动态列表"
+    ```
+
+- 生成 StatusesController
+    ```bash
+    php artisan make:controller StatusesController
+    ```
+
+- 用户可以发布动态
+    ```bash
+    git add -A
+    git commit -m "完成用户发布动态"
+    ```
