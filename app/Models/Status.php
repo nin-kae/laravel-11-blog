@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -26,11 +27,18 @@ use Illuminate\Support\Carbon;
  * @method static Builder<static>|Status whereId($value)
  * @method static Builder<static>|Status whereUpdatedAt($value)
  * @method static Builder<static>|Status whereUserId($value)
- * @mixin \Eloquent
+ * @mixin Eloquent
  */
 class Status extends Model
 {
     use HasFactory;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<string>
+     */
+    protected $fillable = ['content'];
 
     /**
      * Status belongs to a user.
