@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('follows', function (Blueprint $table) {
+        Schema::create('followers', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id')->index()->comment('用户 ID');
             $table->integer('follower_id')->index()->comment('粉丝的用户 ID');
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('follows');
+        Schema::dropIfExists('followers');
     }
 };
