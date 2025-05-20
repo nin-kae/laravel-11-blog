@@ -14,6 +14,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Carbon;
 
 /**
@@ -133,9 +134,16 @@ class User extends Authenticatable
         return $this->hasMany(Status::class);
     }
 
-    public function feed(): HasMany
+    /**
+     * Query the feed of the user.
+     *
+     * @return Builder
+     */
+    public function feed(): Builder
     {
-        return $this->statuses()->orderBy('created_at', 'desc');
+        $followingUserIds = $this->followings->pluck('id')->toArray();
+        $followingUserIds[] = $this->id;
+        return Status::whereIn('user_id', $followingUserIds)->with('user')->latest();
     }
 
     /**
