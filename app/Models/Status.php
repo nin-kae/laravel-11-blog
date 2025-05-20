@@ -27,6 +27,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder<static>|Status whereId($value)
  * @method static Builder<static>|Status whereUpdatedAt($value)
  * @method static Builder<static>|Status whereUserId($value)
+ * @method static \Database\Factories\StatusFactory factory($count = null, $state = [])
  * @mixin Eloquent
  */
 class Status extends Model
