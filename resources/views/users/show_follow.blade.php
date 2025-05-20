@@ -7,11 +7,17 @@
 
         <div class="list-group list-group-flush">
             @foreach ($users as $user)
-                <div class="list-group-item">
-                    <img class="me-3" src="{{ $user->gravatar() }}" alt="{{ $user->name }}" width=32>
-                    <a class="text-decoration-none" href="{{ route('users.show', $user) }}">
+                <div class="list-group-item d-flex align-items-center">
+                    <a href="{{ route('users.show', $user) }}" class="me-3 flex-shrink-0">
+                        <img class="rounded-circle" src="{{ $user->gravatar(32) }}" alt="{{ $user->name }}"
+                             style="width: 32px; height: 32px; display: block;">
+                    </a>
+                    <a class="text-decoration-none fw-bold me-auto" href="{{ route('users.show', $user) }}">
                         {{ $user->name }}
                     </a>
+                    <small class="text-muted ms-2">
+                        最后活跃于: {{ $user->updated_at->diffForHumans() }}
+                    </small>
                 </div>
 
             @endforeach
