@@ -23,15 +23,16 @@ nav.navbar.navbar-expand-lg {
 // 更明确地指定是 .footer 类的 footer 元素
 footer.footer {
     margin-top: 45px;
-    padding-top: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     border-top: 1px solid #eaeaea;
     color: #777;
     font-size: 13px;
-    font-weight: bold;
 
     // --- 添加 Flexbox 属性 ---
     display: flex; // 将 footer 设置为 flex 容器
     align-items: center; // 垂直居中所有子项 (图片、链接、div)
+    justify-content: center;
     // justify-content: space-between; // 如果你希望左右两边的内容自动分开
 
     img.brand-icon {
@@ -41,8 +42,9 @@ footer.footer {
         // vertical-align: middle; // 在 Flexbox 中, align-items 通常更适用
     }
 
-    a {
+    a, a:visited {
         color: #555;
+        font-weight: bold;
     }
 
     a:hover {
@@ -53,6 +55,7 @@ footer.footer {
         // 当父元素是 flex 容器时，子项的 float 属性通常会被忽略。
         // 我们使用 margin-left: auto; 来将这个 div 推到右边。
         margin-left: auto;
+        text-decoration: underline;
     }
 }
 
@@ -61,6 +64,11 @@ section.user_info {
     padding-bottom: 10px;
     margin-top: 20px;
     text-align: center;
+
+    a {
+        display: inline-block;
+        text-decoration: none;
+    }
 
     .gravatar {
         float: none;
@@ -89,5 +97,38 @@ section.user_info {
     .gravatar {
         float: none;
         max-width: 100px;
+    }
+}
+
+/* Status */
+.status-delete-btn {
+    width: max-content;
+}
+
+.stats {
+    overflow: auto;
+    margin-top: 0;
+    padding: 0;
+    a {
+        float: left;
+        padding: 0 10px;
+        text-align: center;
+        width: 33%;
+        border-left: 1px solid #eee;
+        color: #33383c;
+        text-decoration: none;
+        &:first-child {
+            padding-left: 0;
+            border: 0;
+        }
+        &:hover {
+            text-decoration: none;
+            color: #337ab7;
+        }
+    }
+    strong {
+        display: block;
+        font-size: 1.2em;
+        color: black;
     }
 }
