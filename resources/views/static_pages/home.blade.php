@@ -19,9 +19,9 @@
         </div>
     @else
         <div class="bg-light p-3 p-sm-5 rounded">
-            <h1>Hello Laravel</h1>
-            <p class="lead">
-                欢迎访问 <b>NIN-KAE</b>
+            <h1 class="tw-text-5xl">Hi 👋</h1>
+            <p class="lead tw-mt-5">
+                欢迎访问 <b>NIN-KAE.</b>
             </p>
             <p>
                 <a class="btn btn-lg btn-success" href="{{ route('signup') }}" role="button">现在注册</a>

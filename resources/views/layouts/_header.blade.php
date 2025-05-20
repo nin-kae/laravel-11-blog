@@ -23,7 +23,7 @@
                             {{-- Logout Form - styled button as dropdown item --}}
                             <form action="{{ route('logout') }}" method="POST">
                                 @csrf
-                                @method('delete')
+                                @method('DELETE')
                                 <button class="dropdown-item text-danger" type="submit">Logout</button>
                             </form>
                         </div>
