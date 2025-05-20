@@ -24,6 +24,12 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        // 生成过去三年内到现在的随机 DateTime 对象
+        $randomDateTime = $this->faker->dateTimeBetween('-3 years', 'now');
+
+        // 格式化为 'Y-m-d H:i:s' 字符串
+        $formattedDateTime = $randomDateTime->format('Y-m-d H:i:s');
+
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
@@ -31,6 +37,8 @@ class UserFactory extends Factory
             'activated' => true,
             'password' => static::$password ??= Hash::make('123456'),
             'remember_token' => Str::random(10),
+            'created_at' => $formattedDateTime,
+            'updated_at' => $formattedDateTime,
         ];
     }
 
