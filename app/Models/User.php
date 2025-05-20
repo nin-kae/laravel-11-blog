@@ -166,10 +166,6 @@ class User extends Authenticatable
      */
     public function follow($userIds): void
     {
-        if (is_array($userIds)) {
-            $userIds = compact('userIds');
-        }
-
         // 这里需要注意的是, 我们在使用 sync() 方法之前要先有定义好对应的关系
         // sync(..., false) 只会添加新的记录，不会删除旧的记录
         $this->followings()->sync($userIds, false);
@@ -183,10 +179,6 @@ class User extends Authenticatable
      */
     public function unfollow($userIds): void
     {
-        if (is_array($userIds)) {
-            $userIds = compact('userIds');
-        }
-
         // 这里需要注意的是, 我们在使用 detach() 方法之前要先有定义好对应的关系
         // detach(ids) 删除指定的记录
         $this->followings()->detach($userIds);
