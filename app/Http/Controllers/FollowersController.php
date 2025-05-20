@@ -37,4 +37,22 @@ class FollowersController extends Controller
 
         return redirect()->route('users.show', $user->id);
     }
+
+    /**
+     * Unfollow a user.
+     *
+     * @param User $user
+     * @return RedirectResponse
+     * @throws AuthorizationException
+     */
+    public function destroy(User $user): RedirectResponse
+    {
+        $this->authorize('follow', $user);
+
+        if (auth()->user()->isFollowing($user->id)) {
+            auth()->user()->unfollow($user);
+        }
+
+        return redirect()->route('users.show', $user->id);
+    }
 }

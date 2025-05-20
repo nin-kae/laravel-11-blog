@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FollowersController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\StaticPagesController;
@@ -54,3 +55,7 @@ Route::get('tests', [TestsController::class, 'index'])->name('tests.index');
 Route::get('users/{user}/followings', [UsersController::class, 'followings'])->name('users.followings');
 // 粉丝列表
 Route::get('users/{user}/followers', [UsersController::class, 'followers'])->name('users.followers');
+// 关注用户
+Route::post('users/followers/{user}', [FollowersController::class, 'store'])->name('followers.store');
+// 取消关注用户
+Route::delete('users/followers/{user}', [FollowersController::class, 'destroy'])->name('followers.destroy');

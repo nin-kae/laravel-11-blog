@@ -187,13 +187,13 @@ class User extends Authenticatable
     /**
      * 判断当前用户是否关注了指定用户
      *
-     * @param User $user
+     * @param User int $userId
      * @return bool
      */
-    public function isFollowing(User $user): bool
+    public function isFollowing(int $userId): bool
     {
         // 使用 contains() 方法判断当前用户的关注列表中是否包含指定用户的 id
-        return $this->followings->contains($user->id);
+        return $this->followings->contains($userId);
     }
 
 }
